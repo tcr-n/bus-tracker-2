@@ -4,9 +4,12 @@ const sources = [
 		id: "vbb",
 		staticResourceHref: "https://unternehmen.vbb.de/gtfs",
 		realtimeResourceHrefs: [
-			"https://production.gtfsrt.vbb.de/",
+			"https://production.gtfsrt.vbb.de/data",
 		],
 		excludeScheduled: false,
+		gtfsOptions: {
+			computeShapeDistTraveled: "always",
+		},
 		getNetworkRef: (journey) => journey?.trip.route.agency.id
 	},
 ];
