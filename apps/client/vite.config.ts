@@ -101,6 +101,8 @@ export default defineConfig({
 		port: 3000,
 		allowedHosts: ["bt.tcrn.fr"],
 
+		allowedHosts: ["bt.tcrn.fr"],
+
 		proxy: {
 			"/api": {
 				changeOrigin: true,
