@@ -138,3 +138,69 @@
 	font-family: "17SYMBOLS";
 	src: url("../fonts/girouette/17SYMBOLS.ttf");
 }
+
+@font-face {
+	font-display: block;
+	font-family: "BVG_Lawo_8";
+	src: url("../fonts/girouette/BVG_Lawo_8.ttf");
+}
+
+@font-face {
+	font-display: block;
+	font-family: "BVG_Lawo_LED_8";
+	src: url("../fonts/girouette/BVG_Lawo_LED_8.ttf");
+}
+
+@font-face {
+	font-display: block;
+	font-family: "BVG_Lawo_LED_12";
+	src: url("../fonts/girouette/BVG_Lawo_LED_12.ttf");
+}
+
+@font-face {
+	font-display: block;
+	font-family: "BVG_Lawo_LED_18";
+	src: url("../fonts/girouette/BVG_Lawo_LED_18.ttf");
+}
+
+@font-face {
+	font-display: block;
+	font-family: "BVG_Lawo_LED_18_schmal";
+	src: url("../fonts/girouette/BVG_Lawo_LED_18_schmal.ttf");
+}
+
+@font-face {
+	font-display: block;
+	font-family: "BVG_Lawo_LED_24";
+	src: url("../fonts/girouette/BVG_Lawo_LED_24.ttf");
+}
+
+@font-face {
+	font-display: block;
+	font-family: "BVG_Lawo_LED_26_Nummer";
+	src: url("../fonts/girouette/BVG_Lawo_LED_26_Nummer.ttf");
+}
+
+@font-face {
+	font-display: block;
+	font-family: "BVG_Lawo_LED_32";
+	src: url("../fonts/girouette/BVG_Lawo_LED_32.ttf");
+}
+
+@font-face {
+	font-display: block;
+	font-family: "BVG_Lawo_LED_32_schmal";
+	src: url("../fonts/girouette/BVG_Lawo_LED_32_schmal.ttf");
+}
+
+@font-face {
+	font-display: block;
+	font-family: "BVG_Lawo_LED_32_Num";
+	src: url("../fonts/girouette/BVG_Lawo_LED_32_Num.ttf");
+}
+
+@font-face {
+	font-display: block;
+	font-family: "BVG_Lawo_LED_32_Num_breit";
+	src: url("../fonts/girouette/BVG_Lawo_LED_32_Num_breit.ttf");
+}

@@ -1,6 +1,33 @@
 export const ALLOWED_FONT_FAMILIES = {
-	"Hanover Graphic": ["0808B2E1", "1310C2E1", "1508C2E1", "1510N2E1", "1513B3E1", "17SYMBOLS"],
-	"Hanover Super-X": ["0505SUPX", "1107SUPX", "1407SUPX", "1507SUPX", "1508SUPX", "1710SUPX"],
+	"Hanover Graphic": [
+		"0808B2E1",
+		"1310C2E1",
+		"1508C2E1",
+		"1510N2E1",
+		"1513B3E1",
+		"17SYMBOLS",
+	],
+	"Hanover Super-X": [
+		"0505SUPX",
+		"1107SUPX",
+		"1407SUPX",
+		"1507SUPX",
+		"1508SUPX",
+		"1710SUPX",
+	],
+	"LAWO": [
+		"BVG_Lawo_8",
+		"BVG_Lawo_LED_8",
+		"BVG_Lawo_LED_12",
+		"BVG_Lawo_LED_18",
+		"BVG_Lawo_LED_18_schmal",
+		"BVG_Lawo_LED_24",
+		"BVG_Lawo_LED_26_Nummer",
+		"BVG_Lawo_LED_32",
+		"BVG_Lawo_LED_32_schmal",
+		"BVG_Lawo_LED_32_Num",
+		"BVG_Lawo_LED_32_Num_breit",
+	],
 } as const;
 
 export type AllowedFontFamily = keyof typeof ALLOWED_FONT_FAMILIES;
@@ -19,6 +46,18 @@ export const FONT_HEIGHTS: Record<AllowedFont, number> = {
 	"1508SUPX": 15,
 	"1710SUPX": 17,
 	"17SYMBOLS": 17,
+
+	"BVG_Lawo_8": 8,
+	"BVG_Lawo_LED_8": 10,
+	"BVG_Lawo_LED_12": 13,
+	"BVG_Lawo_LED_18": 18,
+	"BVG_Lawo_LED_18_schmal": 18,
+	"BVG_Lawo_LED_24": 24,
+	"BVG_Lawo_LED_26_Nummer": 26,
+	"BVG_Lawo_LED_32": 32,
+	"BVG_Lawo_LED_32_schmal": 32,
+	"BVG_Lawo_LED_32_Num": 32,
+	"BVG_Lawo_LED_32_Num_breit": 32,
 };
 
 export const DEFAULT_FONT_FAMILY: AllowedFontFamily = "Hanover Graphic";
@@ -27,11 +66,13 @@ export const DEFAULT_FONT_VARIANT: AllowedFont = "1513B3E1";
 export const ALL_FONTS: readonly AllowedFont[] = [
 	...ALLOWED_FONT_FAMILIES["Hanover Graphic"],
 	...ALLOWED_FONT_FAMILIES["Hanover Super-X"],
+	...ALLOWED_FONT_FAMILIES["LAWO"],
 ] as const;
 
 export const FONT_FAMILY_SHORT: Record<AllowedFontFamily, string> = {
 	"Hanover Graphic": "Graphique",
 	"Hanover Super-X": "Super-X",
+	"LAWO": "LAWO",
 };
 
 export function getFontFamily(fontVariant: string): AllowedFontFamily {
