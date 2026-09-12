@@ -6,7 +6,6 @@ const sources = [
 		realtimeResourceHrefs: [
 			"https://production.gtfsrt.vbb.de/data",
 		],
-		excludeScheduled: false,
 		gtfsOptions: {
 			computeShapeDistTraveled: "always",
 		},
