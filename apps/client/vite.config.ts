@@ -104,7 +104,7 @@ export default defineConfig({
 		proxy: {
 			"/api": {
 				changeOrigin: true,
-				target: "http://localhost:3001",
+				target: "https://bt.tcrn.fr",
 				rewrite: (path) => path.replace(/^\/api/, ""),
 			},
 		},
