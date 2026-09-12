@@ -3,13 +3,11 @@ const sources = [
 	{
 		id: "vbb",
 		staticResourceHref: "https://unternehmen.vbb.de/gtfs",
-		realtimeResourceHrefs: [
-			"https://production.gtfsrt.vbb.de/data",
-		],
+		realtimeResourceHrefs: ["https://production.gtfsrt.vbb.de/data"],
 		gtfsOptions: {
 			computeShapeDistTraveled: "always",
 		},
-		getNetworkRef: (journey) => journey?.trip.route.agency.id
+		getNetworkRef: (journey) => journey?.trip.route.agency.id,
 	},
 ];
 
