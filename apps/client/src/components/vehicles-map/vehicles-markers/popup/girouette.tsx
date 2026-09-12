@@ -74,6 +74,18 @@ const fontProperties = {
 	"LUMIPLAN-2": { height: 8, spacing: 1, extraSpacing: false },
 	"LUMIPLAN-A": { height: 16, spacing: 1, extraSpacing: false },
 	"DUHAMEL-24-22-2": { height: 22, spacing: 2, extraSpacing: false },
+	// LAWO fonts
+	"BVG_Lawo_8": { height: 8, spacing: 1, extraSpacing: false },
+	"BVG_Lawo_LED_8": { height: 10, spacing: 1, extraSpacing: false },
+	"BVG_Lawo_LED_12": { height: 13, spacing: 1, extraSpacing: false },
+	"BVG_Lawo_LED_18": { height: 18, spacing: 1, extraSpacing: false },
+	"BVG_Lawo_LED_18_schmal": { height: 18, spacing: 1, extraSpacing: false },
+	"BVG_Lawo_LED_24": { height: 24, spacing: 1, extraSpacing: false },
+	"BVG_Lawo_LED_26_Nummer": { height: 26, spacing: 1, extraSpacing: false },
+	"BVG_Lawo_LED_32": { height: 32, spacing: 1, extraSpacing: false },
+	"BVG_Lawo_LED_32_schmal": { height: 32, spacing: 1, extraSpacing: false },
+	"BVG_Lawo_LED_32_Num": { height: 32, spacing: 1, extraSpacing: false },
+	"BVG_Lawo_LED_32_Num_breit": { height: 32, spacing: 1, extraSpacing: false },
 	// Special fonts
 	METRO: { height: 16, spacing: 0, extraSpacing: false },
 	"1510N2E1-TCAR": { height: 15, spacing: 2, extraSpacing: false },
