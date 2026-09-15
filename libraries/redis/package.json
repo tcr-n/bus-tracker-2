@@ -1,5 +1,5 @@
 {
-	"name": "@bus-tracker/contracts",
+	"name": "@bus-tracker/redis",
 	"type": "module",
 	"exports": {
 		".": {
@@ -8,18 +8,19 @@
 		}
 	},
 	"private": true,
-	"publishConfig": {
-		"access": "public"
-	},
 	"scripts": {
 		"build": "tsc",
 		"dev": "tsc --watch"
 	},
 	"devDependencies": {
+		"@types/node": "^26.5.1",
 		"typescript": "^7.0.2"
 	},
+	"peerDependencies": {
+		"@types/node": "*"
+	},
 	"dependencies": {
-		"arktype": "^2.2.3",
-		"zod": "^4.6.4"
+		"@bus-tracker/monitoring": "workspace:*",
+		"redis": "^6.2.1"
 	}
 }
