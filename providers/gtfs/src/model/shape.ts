@@ -32,9 +32,10 @@ export class Shape {
 		return [this.getPointLatitude(index), this.getPointLongitude(index)];
 	}
 
-	findClosestPointDistance(lat: number, lon: number) {
+	/** Indice du point du tracé le plus proche de la position donnée. */
+	findClosestPointIndex(lat: number, lon: number) {
 		let closestDist = Infinity;
-		let closestPointDist = 0;
+		let closestIndex = 0;
 
 		for (let i = 0; i < this.length; i++) {
 			const pointLat = this.getPointLatitude(i);
@@ -43,11 +44,15 @@ export class Shape {
 
 			if (dist < closestDist) {
 				closestDist = dist;
-				closestPointDist = this.getPointDistanceTraveled(i) || 0;
+				closestIndex = i;
 			}
 		}
 
-		return closestPointDist;
+		return closestIndex;
+	}
+
+	findClosestPointDistance(lat: number, lon: number) {
+		return this.getPointDistanceTraveled(this.findClosestPointIndex(lat, lon)) || 0;
 	}
 
 	findPointIndex(distanceTraveled: number) {
@@ -100,6 +105,106 @@ export class Shape {
 			longitude: currentLongitude + (nextLongitude - currentLongitude) * pointRatio,
 			bearing: getDirection(currentLongitude, currentLatitude, nextLongitude, nextLatitude),
 		};
+	}
+
+	/**
+	 * Projette une position sur le tracé : le point du tracé le plus proche d'elle, cherché sur les
+	 * segments et non parmi les seuls sommets, et sa distance en mètres.
+	 *
+	 * Retourne undefined pour un tracé vide.
+	 */
+	projectPosition(latitude: number, longitude: number) {
+		if (this.length === 0) return;
+		if (this.length === 1) {
+			const pointLatitude = this.getPointLatitude(0);
+			const pointLongitude = this.getPointLongitude(0);
+			return {
+				latitude: pointLatitude,
+				longitude: pointLongitude,
+				distance: getDistance(latitude, longitude, pointLatitude, pointLongitude),
+			};
+		}
+
+		// Projection équirectangulaire locale : la longitude est corrigée par cos(lat) pour que les
+		// écarts restent comparables sur les deux axes autour de la position mesurée.
+		const cosLat = Math.cos((latitude * Math.PI) / 180);
+		const px = longitude * cosLat;
+		const py = latitude;
+
+		// Le segment le plus proche est choisi sur les écarts planaires, qui suffisent à les classer à
+		// cette échelle ; la distance n'est mesurée qu'une fois, sur le vainqueur. Cette méthode est
+		// appelée pour chaque point d'un tracé entier : un haversine par segment coûterait cent fois plus.
+		let closestOffsetSquared = Number.POSITIVE_INFINITY;
+		let closestLatitude = latitude;
+		let closestLongitude = longitude;
+
+		for (let i = 0; i < this.length - 1; i++) {
+			const aLat = this.getPointLatitude(i);
+			const aLon = this.getPointLongitude(i);
+			const bLat = this.getPointLatitude(i + 1);
+			const bLon = this.getPointLongitude(i + 1);
+
+			const ax = aLon * cosLat;
+			const ay = aLat;
+			const dx = bLon * cosLat - ax;
+			const dy = bLat - ay;
+			const segmentLengthSquared = dx * dx + dy * dy;
+
+			let t = segmentLengthSquared === 0 ? 0 : ((px - ax) * dx + (py - ay) * dy) / segmentLengthSquared;
+			t = Math.max(0, Math.min(1, t));
+
+			const offsetX = px - (ax + t * dx);
+			const offsetY = py - (ay + t * dy);
+			const offsetSquared = offsetX * offsetX + offsetY * offsetY;
+
+			if (offsetSquared < closestOffsetSquared) {
+				closestOffsetSquared = offsetSquared;
+				closestLatitude = aLat + t * (bLat - aLat);
+				closestLongitude = aLon + t * (bLon - aLon);
+			}
+		}
+
+		return {
+			latitude: closestLatitude,
+			longitude: closestLongitude,
+			distance: getDistance(latitude, longitude, closestLatitude, closestLongitude),
+		};
+	}
+
+	/** Distance en mètres entre la position donnée et le tracé. */
+	distanceToPosition(latitude: number, longitude: number) {
+		return this.projectPosition(latitude, longitude)?.distance ?? Number.POSITIVE_INFINITY;
+	}
+
+	/**
+	 * Extrait la portion de tracé comprise entre deux positions, chacune ramenée au point du tracé
+	 * qui lui est le plus proche.
+	 *
+	 * Le découpage est purement géométrique : `shape_dist_traveled` est absent de nombreux GTFS, et
+	 * les distances curvilignes n'y sont alors pas exploitables.
+	 *
+	 * Retourne un tableau vide si les deux positions se projettent sur le même point, ou dans
+	 * l'ordre inverse de celui du tracé.
+	 */
+	sliceBetweenPositions(from: { latitude: number; longitude: number }, to: { latitude: number; longitude: number }) {
+		const fromIndex = this.findClosestPointIndex(from.latitude, from.longitude);
+		const toIndex = this.findClosestPointIndex(to.latitude, to.longitude);
+		if (toIndex <= fromIndex) return [];
+
+		const points: [number, number][] = [];
+		for (let i = fromIndex; i <= toIndex; i++) {
+			points.push(this.getPoint(i));
+		}
+		return points;
+	}
+
+	/** Les points du tracé, dans l'ordre, sans leurs distances curvilignes. */
+	getPoints(): [number, number][] {
+		const points: [number, number][] = new Array(this.length);
+		for (let i = 0; i < this.length; i++) {
+			points[i] = this.getPoint(i);
+		}
+		return points;
 	}
 
 	asPath(): VehicleJourneyPath {
