@@ -6,6 +6,14 @@ const sources = [
 		realtimeResourceHrefs: ["https://production.gtfsrt.vbb.de/data"],
 		gtfsOptions: {
 			computeShapeDistTraveled: "always",
+			postLoad: (resource) => {
+				for (const route of resource.routes.values()) {
+					if (route.agency.name === 'Berliner Verkehrsbetriebe' && route.type === 'TRAMWAY') {
+						route.color = 'E2001A';
+						route.textColor = 'FFFFFF';
+					}
+				}
+			}
 		},
 		getNetworkRef: (journey) => journey?.trip.route.agency.id,
 	},
